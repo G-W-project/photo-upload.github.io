@@ -6,7 +6,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
 </head>
 
-<body>
+<body style="background-color:#303030;">
     <form action="https://script.google.com/macros/s/AKfycby9u2jAs9pN_YtxO4wL3wXob26RCI99P0HmX0e-qNxlewMB2nvKRIBaiUXU0eFG-g1S/exec" id="form" method="post">
         Upload a file
         <div id="data"></div>
@@ -29,26 +29,7 @@
     });
     </script>
   <script>
-// Set background color and full-screen centering
-document.body.style.backgroundColor = "#303030"; // grey
-document.body.style.display = "flex";
-document.body.style.justifyContent = "center"; // horizontal center
-document.body.style.alignItems = "center";     // vertical center
-document.body.style.height = "100vh";         // full viewport height
-document.body.style.margin = "0";
-document.body.style.fontFamily = "Arial, sans-serif";
 
-// Center the form text
-const form = document.querySelector('form');
-if (form) {
-    form.style.textAlign = "center"; 
-    form.style.backgroundColor = "#fff"; // optional: make form stand out
-    form.style.padding = "16px";
-    form.style.borderRadius = "8px";
-    form.style.boxShadow = "0 2px 6px rgba(0,0,0,0.08)";
-}
-
-// Style submit button
 const submitButtons = document.querySelectorAll('input[type="submit"]');
 submitButtons.forEach(button => {
     button.style.backgroundColor = "orange";
