@@ -6,12 +6,45 @@
 </head>
 
 <body>
-    <form action="https://script.google.com/macros/s/AKfycbzYzibvpaJfLftzJ9unEf1WFUK0N4Y7TjaYYoGc9Shxy3mQcNfNlYh9Tctsp8dh1TdZ/exec" id="form" method="post">
-        Upload a file
-        <div id="data"></div>
-        <input name="file" id="uploadfile" type="file">
-        <input id="submit" type="submit">
-    </form>
+    <form id="uploadForm">
+  <input type="file" id="fileInput" name="file">
+  <button type="submit">Upload</button>
+</form>
+
+<div id="status"></div>
+
+<script>
+const form = document.getElementById('uploadForm');
+const status = document.getElementById('status');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent the normal form submission
+
+  const fileInput = document.getElementById('fileInput');
+  const file = fileInput.files[0];
+  if (!file) {
+    status.textContent = 'Please select a file.';
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('file', file);
+
+  fetch('https://script.google.com/macros/s/AKfycbxoOSRSZgrSaLZq88Nkq5vP4-Smtfv8_AwlJkGOKzS6GdK0sc6elz5C2qXJVWcjlU4E/exec', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(result => {
+    status.textContent = 'Upload successful!';
+    console.log(result); // You can see the server response here
+  })
+  .catch(error => {
+    status.textContent = 'Upload failed.';
+    console.error(error);
+  });
+});
+</script>
     <script>
     $('#uploadfile').on("change", function() {
         var file = this.files[0];
