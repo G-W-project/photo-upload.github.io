@@ -29,10 +29,26 @@
     });
     </script>
   <script>
-// Change background color
-document.body.style.backgroundColor = "#e0e0e0"; // light grey
+// Set background color and full-screen centering
+document.body.style.backgroundColor = "#303030"; // grey
+document.body.style.display = "flex";
+document.body.style.justifyContent = "center"; // horizontal center
+document.body.style.alignItems = "center";     // vertical center
+document.body.style.height = "100vh";         // full viewport height
+document.body.style.margin = "0";
+document.body.style.fontFamily = "Arial, sans-serif";
 
-// Change all submit buttons to orange
+// Center the form text
+const form = document.querySelector('form');
+if (form) {
+    form.style.textAlign = "center"; 
+    form.style.backgroundColor = "#fff"; // optional: make form stand out
+    form.style.padding = "16px";
+    form.style.borderRadius = "8px";
+    form.style.boxShadow = "0 2px 6px rgba(0,0,0,0.08)";
+}
+
+// Style submit button
 const submitButtons = document.querySelectorAll('input[type="submit"]');
 submitButtons.forEach(button => {
     button.style.backgroundColor = "orange";
@@ -42,7 +58,7 @@ submitButtons.forEach(button => {
     button.style.borderRadius = "4px";
     button.style.cursor = "pointer";
 
-    // Optional: hover effect
+    // Hover effect
     button.addEventListener("mouseover", () => button.style.filter = "brightness(0.95)");
     button.addEventListener("mouseout", () => button.style.filter = "brightness(1)");
 });
