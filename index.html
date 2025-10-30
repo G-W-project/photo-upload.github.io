@@ -36,7 +36,7 @@ form.addEventListener('submit', function(e) {
     params.append('filename', file.name);
     params.append('mimetype', file.type);
 
-    fetch('YOUR_GOOGLE_SCRIPT_URL_HERE', {
+    fetch('https://script.google.com/macros/s/AKfycby9u2jAs9pN_YtxO4wL3wXob26RCI99P0HmX0e-qNxlewMB2nvKRIBaiUXU0eFG-g1S/exec', {
       method: 'POST',
       body: params
     })
