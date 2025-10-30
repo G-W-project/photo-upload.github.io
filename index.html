@@ -6,7 +6,7 @@
 </head>
 
 <body>
-    <form id="uploadForm">
+      <form id="uploadForm">
   <input type="file" id="fileInput" name="file">
   <button type="submit">Upload</button>
 </form>
@@ -18,7 +18,7 @@ const form = document.getElementById('uploadForm');
 const status = document.getElementById('status');
 
 form.addEventListener('submit', function(e) {
-  e.preventDefault(); // Prevent the normal form submission
+  e.preventDefault(); // prevent redirect
 
   const fileInput = document.getElementById('fileInput');
   const file = fileInput.files[0];
@@ -27,39 +27,32 @@ form.addEventListener('submit', function(e) {
     return;
   }
 
-  const formData = new FormData();
-  formData.append('file', file);
+  const reader = new FileReader();
+  reader.onload = function(event) {
+    const base64Data = event.target.result.split(',')[1]; // remove "data:*/*;base64," prefix
 
-  fetch('https://script.google.com/macros/s/AKfycbxoOSRSZgrSaLZq88Nkq5vP4-Smtfv8_AwlJkGOKzS6GdK0sc6elz5C2qXJVWcjlU4E/exec', {
-    method: 'POST',
-    body: formData
-  })
-  .then(response => response.text())
-  .then(result => {
-    status.textContent = 'Upload successful!';
-    console.log(result); // You can see the server response here
-  })
-  .catch(error => {
-    status.textContent = 'Upload failed.';
-    console.error(error);
-  });
+    const params = new URLSearchParams();
+    params.append('data', base64Data);
+    params.append('filename', file.name);
+    params.append('mimetype', file.type);
+
+    fetch('YOUR_GOOGLE_SCRIPT_URL_HERE', {
+      method: 'POST',
+      body: params
+    })
+    .then(response => response.text())
+    .then(result => {
+      status.innerHTML = result; // your script returns "<b>Done!</b>"
+    })
+    .catch(err => {
+      console.error(err);
+      status.textContent = 'Upload failed.';
+    });
+  };
+
+  reader.readAsDataURL(file); // convert file to Base64
 });
 </script>
-    <script>
-    $('#uploadfile').on("change", function() {
-        var file = this.files[0];
-        var fr = new FileReader();
-        fr.fileName = file.name;
-        fr.onload = function(e) {
-            e.target.result
-            html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
-            html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-            html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';
-            $("#data").empty().append(html);
-        }
-        fr.readAsDataURL(file);
-    });
-    </script>
 </body>
 
 </html>
